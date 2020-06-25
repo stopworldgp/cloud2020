@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- * @Author theone
- * @Date 2020/6/1 21:10
- * @Version 1.0
+ * @auther zzyy
+ * @create 2020-02-20 11:15
  */
 @RestController
 @Slf4j
-public class PaymentController {
-
+public class PaymentController
+{
     @Resource
     private PaymentService paymentService;
 
@@ -25,7 +24,8 @@ public class PaymentController {
     private String serverPort;
 
     @GetMapping("/payment/hystrix/ok/{id}")
-    public String paymentInfo_OK(@PathVariable("id") Integer id){
+    public String paymentInfo_OK(@PathVariable("id") Integer id)
+    {
         String result = paymentService.paymentInfo_OK(id);
         log.info("*****result: "+result);
         return result;
@@ -39,5 +39,12 @@ public class PaymentController {
         return result;
     }
 
-
+    //====服务熔断
+    @GetMapping("/payment/circuit/{id}")
+    public String paymentCircuitBreaker(@PathVariable("id") Integer id)
+    {
+        String result = paymentService.paymentCircuitBreaker(id);
+        log.info("****result: "+result);
+        return result;
+    }
 }
